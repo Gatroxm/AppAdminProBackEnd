@@ -24,6 +24,12 @@ router.post('/', [
     validarCampos
 ], postHospitales)
 
-router.put('/:id', putHospitales)
-router.delete('/:id', deletetHospitales)
+router.put('/:id', [
+    validarJWT,
+    check('nombre', 'EL nombre es obligatorio').not().isEmpty(),
+    validarCampos
+], putHospitales)
+router.delete('/:id', [
+    validarJWT
+], deletetHospitales)
 module.exports = router;

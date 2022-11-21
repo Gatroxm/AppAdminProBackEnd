@@ -27,13 +27,14 @@ router.post('/', [
 ], PostUsuarios)
 
 router.put('/:id', [
-    validarCampos,
+    validarJWT,
     check('nombre', 'EL nombre es obligatorio').not().isEmpty(),
     check('password', 'La contraseña es obligatorio').not().isEmpty(),
     check('role', 'La contraseña es obligatorio').not().isEmpty(),
     check('email', 'El Email es obligatorio').isEmail(),
+    validarCampos,
 ], PutUsuario)
 router.delete('/:id', [
-    validarCampos
+    validarJWT
 ], DeleteUsuario)
 module.exports = router;
