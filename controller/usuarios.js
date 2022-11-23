@@ -87,7 +87,10 @@ const PutUsuario = async(req, res = response) => {
                 });
             }
         }
-        campos.email = email;
+        if (!existeUsuarioBd.google) {
+
+            campos.email = email;
+        }
         const usuarioActualizado = await Usuario.findByIdAndUpdate(uid, campos, { new: true });
 
         res.json({

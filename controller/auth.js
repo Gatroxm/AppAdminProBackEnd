@@ -12,7 +12,7 @@ const login = async(req, res = response) => {
         if (!usuarioDB) {
             return res.status(400).json({
                 ok: false,
-                msg: `El correo ${email} ya se encuentra registrado`
+                msg: `El correo ${email} no se encuentra registrado`
             });
         }
         const validaPass = bcrypt.compareSync(password, usuarioDB.password);
@@ -73,11 +73,15 @@ const loginGoogle = async(req, res = response) => {
 const renewToken = async(req, res = response) => {
     const uid = req.uid;
     //Generar JWT
-    const token = await generarJWT(uid);
+    const [token, usuario] = await Promise.all([
+        generarJWT(uid),
+        Usuario.findById(uid)
+    ])
 
     res.json({
         ok: true,
-        token
+        token,
+        usuario
     })
 }
 module.exports = {
